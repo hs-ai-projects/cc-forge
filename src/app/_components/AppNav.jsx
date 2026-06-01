@@ -1,28 +1,30 @@
 "use client";
 
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar } from "@heroui/react";
+import {
+  Avatar,
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from "@heroui/react";
 import { useSession, signOut } from "next-auth/react";
+import Link from "next/link";
 
 export default function AppNav() {
   const { data: session } = useSession();
   const user = session?.user;
 
   return (
-    <Navbar maxWidth="full" isBordered>
-      <NavbarBrand>
-        <Link href="/" color="foreground" className="font-semibold">cc-forge</Link>
-      </NavbarBrand>
+    <header className="border-b border-default-200 bg-content1 px-6 h-14 flex items-center justify-between">
+      <Link href="/" className="font-semibold">cc-forge</Link>
 
-      <NavbarContent justify="center">
-        <NavbarItem>
-          <Link href="/" color="foreground">Home</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Link href="/chat" color="foreground">AI Chat</Link>
-        </NavbarItem>
-      </NavbarContent>
+      <nav className="flex items-center gap-6 text-sm">
+        <Link href="/" className="text-default-700 hover:text-foreground">Home</Link>
+        <Link href="/chat" className="text-default-700 hover:text-foreground">AI Chat</Link>
+      </nav>
 
-      <NavbarContent justify="end">
+      <div className="flex items-center">
         {user ? (
           <Dropdown placement="bottom-end">
             <DropdownTrigger>
@@ -39,17 +41,19 @@ export default function AppNav() {
                 <p className="font-semibold">{user.name}</p>
                 <p className="text-tiny text-default-500">{user.email}</p>
               </DropdownItem>
-              <DropdownItem key="logout" color="danger" onPress={() => signOut({ callbackUrl: "/signin" })}>
+              <DropdownItem
+                key="logout"
+                color="danger"
+                onPress={() => signOut({ callbackUrl: "/signin" })}
+              >
                 登出
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>
         ) : (
-          <NavbarItem>
-            <Button href="/signin" as={Link} variant="flat">登录</Button>
-          </NavbarItem>
+          <Button as={Link} href="/signin" variant="flat" size="sm">登录</Button>
         )}
-      </NavbarContent>
-    </Navbar>
+      </div>
+    </header>
   );
 }
