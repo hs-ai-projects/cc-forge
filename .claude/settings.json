@@ -3,5 +3,17 @@
     "allow": [
       "mcp__code-review-graph__semantic_search_nodes_tool"
     ]
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": true,
+    "caveman@caveman": true
   }
 }
