@@ -27,7 +27,7 @@ export async function POST(request) {
 
   // 持久化最新 user message（按 client id 去重）
   const lastMsg = messages[messages.length - 1];
-  if (lastMsg?.role === "user") {
+  if (lastMsg?.role === "user" && lastMsg.id && Array.isArray(lastMsg.parts) && lastMsg.parts.length > 0) {
     await prisma.message.upsert({
       where: { id: lastMsg.id },
       create: {
@@ -40,10 +40,12 @@ export async function POST(request) {
     });
   }
 
+  const modelMessages = await convertToModelMessages(messages);
+
   const result = streamText({
     model: llm,
     system: SYSTEM_PROMPT,
-    messages: convertToModelMessages(messages),
+    messages: modelMessages,
     tools: {
       confirmAction: confirmActionTool,
       getCurrentTime: getCurrentTimeTool,
@@ -54,7 +56,9 @@ export async function POST(request) {
   return result.toUIMessageStreamResponse({
     onFinish: async ({ messages: finalMessages }) => {
       const existingIds = new Set(messages.map((m) => m.id));
-      const newOnes = finalMessages.filter((m) => !existingIds.has(m.id));
+      const newOnes = finalMessages.filter(
+        (m) => m.id && !existingIds.has(m.id) && Array.isArray(m.parts) && m.parts.length > 0
+      );
       if (newOnes.length === 0) return;
       await prisma.$transaction([
         ...newOnes.map((m) =>

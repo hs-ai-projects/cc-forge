@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect } from "react";
-import { Button, Card } from "@heroui/react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Plus, Trash2 } from "lucide-react";
 import useQuery from "@/app/_hooks/useQuery";
@@ -27,7 +26,6 @@ export default function ConversationList({ activeId, onSelect }) {
     },
   });
 
-  // 自动选中第一条
   useEffect(() => {
     if (!activeId && list && list.length > 0) {
       onSelect(list[0].id);
@@ -36,39 +34,45 @@ export default function ConversationList({ activeId, onSelect }) {
 
   return (
     <div className="p-3 space-y-2">
-      <Button
-        color="primary"
-        variant="flat"
-        startContent={<Plus size={16} />}
-        onPress={() => createMut.mutate()}
-        isLoading={createMut.isPending}
-        className="w-full"
+      <button
+        type="button"
+        onClick={() => createMut.mutate()}
+        disabled={createMut.isPending}
+        className="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-sm font-medium disabled:opacity-50"
       >
+        <Plus size={16} />
         新建会话
-      </Button>
+      </button>
 
       <div className="space-y-1">
         {list?.map((conv) => (
-          <Card
+          <div
             key={conv.id}
-            isPressable
-            onPress={() => onSelect(conv.id)}
-            className={`p-3 cursor-pointer ${conv.id === activeId ? "bg-primary-50" : ""}`}
+            role="button"
+            tabIndex={0}
+            onClick={() => onSelect(conv.id)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") onSelect(conv.id);
+            }}
+            className={`group p-3 rounded-lg cursor-pointer text-sm flex justify-between items-center gap-2 ${
+              conv.id === activeId
+                ? "bg-indigo-50 border border-indigo-200"
+                : "border border-transparent hover:bg-stone-100"
+            }`}
           >
-            <div className="flex justify-between items-center gap-2">
-              <span className="truncate text-sm flex-1">{conv.title}</span>
-              <button
-                aria-label="delete"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (confirm("删除该会话？")) deleteMut.mutate(conv.id);
-                }}
-                className="text-default-400 hover:text-danger"
-              >
-                <Trash2 size={14} />
-              </button>
-            </div>
-          </Card>
+            <span className="truncate flex-1">{conv.title}</span>
+            <button
+              type="button"
+              aria-label="delete"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (confirm("删除该会话？")) deleteMut.mutate(conv.id);
+              }}
+              className="text-stone-400 hover:text-red-500"
+            >
+              <Trash2 size={14} />
+            </button>
+          </div>
         ))}
       </div>
     </div>

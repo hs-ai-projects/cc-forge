@@ -1,12 +1,10 @@
 "use client";
 
-import { Button, Card, CardContent, CardHeader } from "@heroui/react";
-
 export default function ConfirmActionTool({ part, addToolOutput }) {
   if (part.state === "output-available") {
     const confirmed = part.output?.confirmed;
     return (
-      <div className="text-sm text-default-500 my-2">
+      <div className="text-sm text-stone-500 my-2">
         {confirmed ? "✓ 已确认" : "✗ 已取消"}
       </div>
     );
@@ -20,15 +18,29 @@ export default function ConfirmActionTool({ part, addToolOutput }) {
     });
 
   return (
-    <Card className="my-2 border border-default-200">
-      <CardHeader className="font-semibold">{part.input?.title}</CardHeader>
-      <CardContent className="space-y-3">
-        <p className="text-sm">{part.input?.description}</p>
+    <div className="my-2 rounded-lg border border-stone-200 bg-white text-stone-900">
+      <div className="px-4 py-3 font-semibold border-b border-stone-100">
+        {part.input?.title}
+      </div>
+      <div className="p-4 space-y-3">
+        <p className="text-sm text-stone-700">{part.input?.description}</p>
         <div className="flex gap-2 justify-end">
-          <Button size="sm" variant="flat" onPress={() => submit(false)}>取消</Button>
-          <Button size="sm" color="primary" onPress={() => submit(true)}>确认</Button>
+          <button
+            type="button"
+            onClick={() => submit(false)}
+            className="px-3 py-1.5 text-sm rounded-md border border-stone-200 hover:bg-stone-50"
+          >
+            取消
+          </button>
+          <button
+            type="button"
+            onClick={() => submit(true)}
+            className="px-3 py-1.5 text-sm rounded-md bg-indigo-600 text-white hover:bg-indigo-700"
+          >
+            确认
+          </button>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

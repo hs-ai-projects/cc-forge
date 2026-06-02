@@ -3,7 +3,6 @@
 import { useMemo, useState } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, lastAssistantMessageIsCompleteWithToolCalls } from "ai";
-import { Button, Input } from "@heroui/react";
 import useQuery from "@/app/_hooks/useQuery";
 import MessagePart from "./MessagePart";
 
@@ -52,10 +51,12 @@ function ChatPanelInner({ conversationId, initialMessages }) {
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.map((m) => (
-          <div key={m.id} className={m.role === "user" ? "flex justify-end" : ""}>
+          <div key={m.id} className={m.role === "user" ? "flex justify-end" : "flex justify-start"}>
             <div
               className={`max-w-[80%] rounded-lg px-4 py-2 ${
-                m.role === "user" ? "bg-primary text-white" : "bg-content2"
+                m.role === "user"
+                  ? "bg-indigo-600 text-white"
+                  : "bg-stone-100 text-stone-900"
               }`}
             >
               {m.parts.map((part, i) => (
@@ -66,22 +67,22 @@ function ChatPanelInner({ conversationId, initialMessages }) {
         ))}
       </div>
 
-      <form onSubmit={submit} className="border-t border-default-200 p-4 flex gap-2">
-        <Input
+      <form onSubmit={submit} className="border-t border-stone-200 p-4 flex gap-2 bg-white">
+        <input
+          type="text"
           value={input}
-          onValueChange={setInput}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="说点什么…"
-          isDisabled={status === "streaming"}
-          className="flex-1"
+          disabled={status === "streaming"}
+          className="flex-1 px-4 py-2 rounded-lg border border-stone-200 bg-white outline-none focus:border-indigo-500 disabled:opacity-50"
         />
-        <Button
+        <button
           type="submit"
-          color="primary"
-          isLoading={status === "streaming"}
-          isDisabled={!input.trim()}
+          disabled={status === "streaming" || !input.trim()}
+          className="px-5 py-2 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          发送
-        </Button>
+          {status === "streaming" ? "..." : "发送"}
+        </button>
       </form>
     </div>
   );

@@ -17,12 +17,12 @@ export default function MessagePart({ part, addToolOutput }) {
     case "tool-getCurrentTime":
       if (part.state === "output-available") {
         return (
-          <div className="text-xs text-default-500 my-1">
+          <div className="text-xs text-stone-500 my-1">
             🕐 {part.output?.iso} ({part.output?.timezone})
           </div>
         );
       }
-      return <div className="text-xs text-default-400 my-1">查询时间中…</div>;
+      return <div className="text-xs text-stone-400 my-1">查询时间中…</div>;
     default:
       return null;
   }
