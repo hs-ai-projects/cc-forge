@@ -1,5 +1,3 @@
-# cc-forge — Claude 指引
-
 ## 组件目录规范
 
 | 路径 | 用途 |
@@ -11,18 +9,10 @@
 **判断标准：** 组件只在某一个路由段（如 `chat/`）内用 → 放 `app/<page>/_components/`；
 需要跨路由复用 → 放 `app/_components/`；纯 UI 原子组件 → 放 `app/_ui/`。
 
-## 模块速查
+## UI 组件规范
 
-新接需求前先看对应骨架代码：
+本项目使用 **HeroUI v3**（`@heroui/react`）作为 UI 组件库，写任何前端代码前必须先确认 HeroUI 是否有对应组件。
 
-- 接口/Hook 规范：`.claude/skills/request-patterns/SKILL.md`
-- 认证：`src/auth.js` + `src/proxy.js`
-- AI SDK 客户端：`src/lib/ai/client.js`
-- AI Tool 模板：`src/lib/ai/tools/`（HITL: `confirmAction`，server-execute: `getCurrentTime`）
-- Chat 流程：`src/app/api/chat/route.js` + `src/app/chat/_components/`
-- DB Schema：`prisma/schema.prisma`
+## API 认证规范
 
-## env
-
-启动前复制 `.env.example` → `.env`，所有字段必填。
-校验在 `src/env.js`，启动时 fail-fast。
+`proxy.js` 统一校验所有非公开路径的 session，API handler 内无需重复判断是否认证。
