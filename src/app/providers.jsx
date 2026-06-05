@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import request from "@/app/api/_utils/client-request";
+import { Toast } from "@heroui/react";
 
 export default function Providers({ children }) {
   const queryClientRef = useRef(new QueryClient({
@@ -24,18 +25,12 @@ export default function Providers({ children }) {
           return res;
         },
       },
-      mutations: {
-        mutationFn(data, { meta }) {
-          const method = meta?.method ?? "post";
-          const url = meta?.url;
-          return request[method](url, data);
-        },
-      },
     },
   }));
 
   return (
     <SessionProvider>
+      <Toast.Provider placement="top" />
       <QueryClientProvider client={queryClientRef.current}>
         {children}
       </QueryClientProvider>

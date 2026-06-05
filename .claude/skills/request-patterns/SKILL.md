@@ -42,16 +42,20 @@ export function deleteItem(id) {
 
 ## 写操作 Hook (useMutation)
 
+mutation 成功后用 `refetch()` 刷新列表，禁止 `useQueryClient` + `invalidateQueries`（queryKey 需手动同步，易出错）。
+
 ```js
-import { useState, useCallback } from "react"
 import { useMutation } from "@tanstack/react-query"
+import useQuery from "@/app/_hooks/useQuery"
 import { createItem } from "@/app/api/_utils/xxx-api"
 
 // 组件中逻辑
-const {mutateAsync, isPending} = useMutation({
-  mutationFn: (data) => createItem(contextId, data)
-})
+const { data, refetch } = useQuery("/items")
 
+const { mutateAsync, isPending } = useMutation({
+  mutationFn: (data) => createItem(contextId, data),
+  onSuccess: () => refetch(),
+})
 ```
 
 ## 读操作 Hook (useQuery)

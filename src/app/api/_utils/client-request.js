@@ -3,7 +3,7 @@ import { toast } from "@heroui/react";
 import { signIn } from "next-auth/react";
 
 const instance = Axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "",
+  baseURL: "/api",
   headers: {
     "Content-Type": "application/json",
   },
