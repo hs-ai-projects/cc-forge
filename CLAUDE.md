@@ -11,7 +11,7 @@
 
 ## UI 组件规范
 
-本项目使用 **HeroUI v3**（`@heroui/react`）作为 UI 组件库，写任何前端代码前必须先确认 HeroUI 是否有对应组件。
+本项目使用 **HeroUI v3**（`@heroui/react`）作为 UI 组件库，写任何前端代码前必须先加载 `heroui-react` skill或mcp 了解正确 API，不得凭记忆猜测 prop 名称。
 
 ## API 认证规范
 

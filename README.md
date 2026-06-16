@@ -48,6 +48,25 @@ pnpm dev
 | LLM provider | `.env` 改 `LLM_PROVIDER`；客户端在 `src/lib/ai/client.js` |
 | UI 库 | 替换 HeroUI 引用，删 `globals.css` 的 `@heroui/styles` import |
 
+## 环境变量
+
+复制 `.env.example` 为 `.env` 后按下表填写：
+
+| 变量 | 必填 | 说明 |
+|------|------|------|
+| `DATABASE_URL` | ✅ | Postgres 连接串，格式 `postgresql://user:pass@host:5432/dbname` |
+| `NEXTAUTH_SECRET` | ✅ | 随机密钥，运行 `openssl rand -base64 32` 生成 |
+| `NEXTAUTH_URL` | ✅ | 应用根 URL，本地为 `http://localhost:3000`，生产改为实际域名 |
+| `FEISHU_APP_ID` | ✅* | 飞书自建应用的 App ID（换其他 OAuth provider 可删） |
+| `FEISHU_APP_SECRET` | ✅* | 飞书自建应用的 App Secret |
+| `NEXTAUTH_FEISHU_URL` | — | 飞书 OAuth 授权地址，默认值已可用，无需修改 |
+| `LLM_PROVIDER` | ✅ | `anthropic` / `openai` / `deepseek`，决定用哪个 SDK 分支 |
+| `LLM_BASE_URL` | ✅ | LLM API 地址，Anthropic 默认 `https://api.anthropic.com` |
+| `LLM_API_KEY` | ✅ | 对应 provider 的 API Key |
+| `LLM_MODEL` | ✅ | 模型名称，如 `claude-sonnet-4-6`、`gpt-4o`、`deepseek-chat` |
+
+> \* 使用飞书 OAuth 时必填；换用 GitHub/Google 等 provider 时删除飞书相关三项，无需填写。
+
 ## 测试
 
 ```bash
