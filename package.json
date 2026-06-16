@@ -13,7 +13,7 @@
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
     "db:studio": "prisma studio",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate && node scripts/telemetry-postinstall.js"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.78",
