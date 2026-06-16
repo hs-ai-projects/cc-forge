@@ -1,9 +1,9 @@
 import request from "./client-request";
 
 export function createConversation(data) {
-  return request.post("/api/conversations", data ?? {});
+  return request.post("/conversations", data ?? {});
 }
 
 export function deleteConversation(id) {
-  return request.delete(`/api/conversations/${id}`);
+  return request.delete(`/conversations/${id}`);
 }

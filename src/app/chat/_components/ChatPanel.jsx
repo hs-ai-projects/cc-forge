@@ -8,7 +8,7 @@ import MessagePart from "./MessagePart";
 
 export default function ChatPanel({ conversationId }) {
   const { data: history, isFetching } = useQuery(
-    `/api/conversations/${conversationId}/messages`,
+    `/conversations/${conversationId}/messages`,
     { enabled: !!conversationId }
   );
 

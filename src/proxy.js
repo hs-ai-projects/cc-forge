@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
+import { ResponseUtil } from "./app/api/_utils/response";
 
 const PUBLIC_PATHS = ["/api/auth", "/signin", "/_next", "/favicon.ico"];
 
@@ -14,10 +15,7 @@ export default async function proxy(request) {
   const session = await auth();
   if (!session) {
     if (pathname.startsWith("/api/")) {
-      return NextResponse.json(
-        { code: 1, msg: "Unauthorized", data: null },
-        { status: 401 }
-      );
+      return ResponseUtil.unauthorized();
     }
     const url = new URL("/signin", request.url);
     url.searchParams.set("callbackUrl", request.nextUrl.href);

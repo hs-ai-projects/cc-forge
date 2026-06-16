@@ -1,27 +1,26 @@
 "use client";
 
 import { useEffect } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Plus, Trash2 } from "lucide-react";
 import useQuery from "@/app/_hooks/useQuery";
 import { createConversation, deleteConversation } from "@/app/api/_utils/conversations";
 
 export default function ConversationList({ activeId, onSelect }) {
-  const queryClient = useQueryClient();
-  const { data: list } = useQuery("/api/conversations");
+  const { data: list, refetch } = useQuery("/conversations");
 
   const createMut = useMutation({
     mutationFn: () => createConversation(),
     onSuccess: (conv) => {
-      queryClient.invalidateQueries({ queryKey: ["/api/conversations"] });
+      refetch();
       onSelect(conv.id);
     },
   });
 
   const deleteMut = useMutation({
     mutationFn: (id) => deleteConversation(id),
-    onSuccess: (_, id) => {
-      queryClient.invalidateQueries({ queryKey: ["/api/conversations"] });
+    onSuccess: async (_, id) => {
+      await refetch();
       if (activeId === id) onSelect(null);
     },
   });
