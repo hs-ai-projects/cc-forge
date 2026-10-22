@@ -23,6 +23,9 @@ importers:
       '@auth/prisma-adapter':
         specifier: ^2.11.2
         version: 2.11.2(@prisma/client@6.19.3(prisma@6.19.3(typescript@6.0.3))(typescript@6.0.3))
+      '@cloudcare/browser-rum':
+        specifier: ^3.3.1
+        version: 3.3.1
       '@heroui/react':
         specifier: ^3.0.1
         version: 3.1.0(@react-spectrum/provider@3.11.1(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(@types/react@19.2.15)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(tailwindcss@4.3.0)
@@ -293,6 +296,15 @@ packages:
   '@bramus/specificity@2.4.2':
     resolution: {integrity: sha512-ctxtJ/eA+t+6q2++vj5j7FYX3nRu311q1wfYH3xjlLOsczhlhxAg2FWNUXhpGvAw3BWo1xBcvOV6/YLc2r5FJw==}
     hasBin: true
+
+  '@cloudcare/browser-core@3.3.0':
+    resolution: {integrity: sha512-bV2YWF5cbEKtpu699TmFThsNxsxluXQAVg0E+Ms5nnXLQ6pq8MfjL6Fu5cvbvgYUz+e1Id397IeSuADtmVaPsw==}
+
+  '@cloudcare/browser-rum@3.3.1':
+    resolution: {integrity: sha512-IVzcDICxYMUNhLz2R9v94c6nKJZoxsSmBp0rgiK1e5LiJYIklAq6phX/k86twPmVLgZ0jZQ66VOrbuvVUcdV0Q==}
+
+  '@cloudcare/browser-worker@3.3.0':
+    resolution: {integrity: sha512-9jFFhTaOygv09XE+3jjz8QSHhqVydrImWyzV4fdOjp+bGlP+zE4ujKIdJ3S9+S/UvXZH+D5Y5vVfvaM2QxKM8Q==}
 
   '@csstools/color-helpers@6.0.2':
     resolution: {integrity: sha512-LMGQLS9EuADloEFkcTBR3BwV/CGHV7zyDxVRtVDTwdI2Ca4it0CCVTT9wCkxSgokjE5Ho41hEPgb8OEUwoXr6Q==}
@@ -3728,6 +3740,17 @@ snapshots:
   '@bramus/specificity@2.4.2':
     dependencies:
       css-tree: 3.2.1
+
+  '@cloudcare/browser-core@3.3.0': {}
+
+  '@cloudcare/browser-rum@3.3.1':
+    dependencies:
+      '@cloudcare/browser-core': 3.3.0
+      '@cloudcare/browser-worker': 3.3.0
+
+  '@cloudcare/browser-worker@3.3.0':
+    dependencies:
+      '@cloudcare/browser-core': 3.3.0
 
   '@csstools/color-helpers@6.0.2': {}
 

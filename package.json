@@ -13,7 +13,7 @@
     "db:migrate": "prisma migrate dev",
     "db:reset": "prisma migrate reset",
     "db:studio": "prisma studio",
-    "postinstall": "prisma generate && node scripts/telemetry-postinstall.js"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.78",
@@ -21,6 +21,7 @@
     "@ai-sdk/openai": "^3.0.65",
     "@ai-sdk/react": "^3.0.192",
     "@auth/prisma-adapter": "^2.11.2",
+    "@cloudcare/browser-rum": "^3.3.1",
     "@heroui/react": "^3.0.1",
     "@heroui/styles": "^3.0.1",
     "@prisma/client": "^6.1.0",
