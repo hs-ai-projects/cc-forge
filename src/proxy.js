@@ -12,7 +12,7 @@ export default async function proxy(request) {
   const { pathname } = request.nextUrl;
   if (isPublic(pathname)) return NextResponse.next();
 
-  const session = await auth();
+  const session = await auth.api.getSession({ headers: request.headers });
   if (!session) {
     if (pathname.startsWith("/api/")) {
       return ResponseUtil.unauthorized();

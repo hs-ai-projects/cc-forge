@@ -1,11 +1,11 @@
 "use client";
 
 import { Avatar, Button, Dropdown } from "@heroui/react";
-import { useSession, signOut } from "next-auth/react";
+import { authClient } from "@/auth-client";
 import Link from "next/link";
 
 export default function AppNav() {
-  const { data: session } = useSession();
+  const { data: session } = authClient.useSession();
   const user = session?.user;
 
   const initials = (user?.name ?? "U")
@@ -37,7 +37,13 @@ export default function AppNav() {
               <Dropdown.Menu
                 aria-label="user menu"
                 onAction={(key) => {
-                  if (key === "logout") signOut({ callbackUrl: "/signin" });
+                  if (key === "logout") {
+                    authClient.signOut({
+                      fetchOptions: {
+                        onSuccess: () => { window.location.href = "/signin"; },
+                      },
+                    });
+                  }
                 }}
               >
                 <Dropdown.Item id="profile" textValue={user.name ?? ""} isReadOnly>

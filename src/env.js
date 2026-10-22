@@ -3,12 +3,12 @@ import { z } from "zod";
 const schema = z.object({
   DATABASE_URL: z.string().url(),
 
-  NEXTAUTH_SECRET: z.string().min(32),
-  NEXTAUTH_URL: z.string().url(),
+  BETTER_AUTH_SECRET: z.string().min(32),
+  BETTER_AUTH_URL: z.string().url(),
 
   FEISHU_APP_ID: z.string().min(1),
   FEISHU_APP_SECRET: z.string().min(1),
-  NEXTAUTH_FEISHU_URL: z.string().url(),
+  FEISHU_AUTH_URL: z.string().url(),
 
   LLM_PROVIDER: z.enum(["anthropic", "openai", "deepseek"]).default("anthropic"),
   LLM_BASE_URL: z.string().url(),

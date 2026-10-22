@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SessionProvider } from "next-auth/react";
 import { Toast } from "@heroui/react";
 
 export default function Providers({ children }) {
@@ -16,11 +15,9 @@ export default function Providers({ children }) {
   }));
 
   return (
-    <SessionProvider>
-      <QueryClientProvider client={queryClientRef.current}>
-        <Toast.Provider placement="top" />
-        {children}
-      </QueryClientProvider>
-    </SessionProvider>
+    <QueryClientProvider client={queryClientRef.current}>
+      <Toast.Provider placement="top" />
+      {children}
+    </QueryClientProvider>
   );
 }

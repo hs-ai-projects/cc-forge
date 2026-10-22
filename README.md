@@ -43,7 +43,7 @@ pnpm dev
 
 | 想换 | 改这里 |
 |------|--------|
-| Auth provider（GitHub/Google/...） | `src/auth.js` 的 `Feishu()` 替换为 next-auth 内置 provider |
+| Auth provider（GitHub/Google/...） | `src/auth.js` 的 `genericOAuth` config 替换为 better-auth 内置 provider |
 | DB 引擎（MySQL/SQLite） | `prisma/schema.prisma` 的 `datasource db.provider` |
 | LLM provider | `.env` 改 `LLM_PROVIDER`；客户端在 `src/lib/ai/client.js` |
 | UI 库 | 替换 HeroUI 引用，删 `globals.css` 的 `@heroui/styles` import |
@@ -55,11 +55,11 @@ pnpm dev
 | 变量 | 必填 | 说明 |
 |------|------|------|
 | `DATABASE_URL` | ✅ | Postgres 连接串，格式 `postgresql://user:pass@host:5432/dbname` |
-| `NEXTAUTH_SECRET` | ✅ | 随机密钥，运行 `openssl rand -base64 32` 生成 |
-| `NEXTAUTH_URL` | ✅ | 应用根 URL，本地为 `http://localhost:3000`，生产改为实际域名 |
+| `BETTER_AUTH_SECRET` | ✅ | 随机密钥，运行 `openssl rand -base64 32` 生成 |
+| `BETTER_AUTH_URL` | ✅ | 应用根 URL，本地为 `http://localhost:3000`，生产改为实际域名 |
 | `FEISHU_APP_ID` | ✅* | 飞书自建应用的 App ID（换其他 OAuth provider 可删） |
 | `FEISHU_APP_SECRET` | ✅* | 飞书自建应用的 App Secret |
-| `NEXTAUTH_FEISHU_URL` | — | 飞书 OAuth 授权地址，默认值已可用，无需修改 |
+| `FEISHU_AUTH_URL` | — | 飞书 OAuth 授权地址，默认值已可用，无需修改 |
 | `LLM_PROVIDER` | ✅ | `anthropic` / `openai` / `deepseek`，决定用哪个 SDK 分支 |
 | `LLM_BASE_URL` | ✅ | LLM API 地址，Anthropic 默认 `https://api.anthropic.com` |
 | `LLM_API_KEY` | ✅ | 对应 provider 的 API Key |

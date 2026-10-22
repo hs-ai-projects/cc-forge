@@ -1,6 +1,6 @@
 import Axios, { CanceledError } from "axios";
 import { toast } from "@heroui/react";
-import { signIn } from "next-auth/react";
+import { authClient } from "@/auth-client";
 
 const instance = Axios.create({
   baseURL: "/api",
@@ -23,7 +23,7 @@ instance.interceptors.response.use(
     }
     const { response } = error;
     if (response?.status === 401) {
-      signIn("feishu")
+      authClient.signIn.social({ provider: "feishu" })
     } else {
       toast.danger(response?.data?.msg || "未知错误！");
     }

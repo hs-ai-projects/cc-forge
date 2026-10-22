@@ -1,9 +1,9 @@
-import { auth } from "@/auth";
+import { getSession } from "@/auth";
 import prisma from "@/lib/db/prisma";
 import { ResponseUtil } from "@/app/api/_utils/response";
 
 export async function GET() {
-  const session = await auth();
+  const session = await getSession();
   const userId = session.user.id;
   const list = await prisma.conversation.findMany({
     where: { userId },
@@ -14,7 +14,7 @@ export async function GET() {
 }
 
 export async function POST(request) {
-  const session = await auth();
+  const session = await getSession();
   const userId = session.user.id;
   const body = await request.json().catch(() => ({}));
   const conv = await prisma.conversation.create({

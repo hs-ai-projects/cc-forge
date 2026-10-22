@@ -1,5 +1,5 @@
 import { streamText, convertToModelMessages, stepCountIs } from "ai";
-import { auth } from "@/auth";
+import { getSession } from "@/auth";
 import prisma from "@/lib/db/prisma";
 import { llm } from "@/lib/ai/client";
 import { confirmActionTool } from "@/lib/ai/tools/confirmAction";
@@ -13,7 +13,7 @@ const SYSTEM_PROMPT = `你是 cc-forge 演示助手。可用工具：
 简明回复，必要时调用工具。`;
 
 export async function POST(request) {
-  const session = await auth();
+  const session = await getSession();
   const userId = session.user.id;
   const { conversationId, messages } = await request.json();
 

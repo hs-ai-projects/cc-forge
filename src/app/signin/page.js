@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useEffect } from "react";
-import { signIn } from "next-auth/react";
+import { authClient } from "@/auth-client";
 import { useSearchParams } from "next/navigation";
 
 function SignInInner() {
@@ -9,7 +9,7 @@ function SignInInner() {
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   useEffect(() => {
-    signIn("feishu", { callbackUrl });
+    authClient.signIn.social({ provider: "feishu", callbackURL: callbackUrl });
   }, []);
   return null;
 }

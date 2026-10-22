@@ -1,9 +1,9 @@
-import { auth } from "@/auth";
+import { getSession } from "@/auth";
 import prisma from "@/lib/db/prisma";
 import { ResponseUtil } from "@/app/api/_utils/response";
 
 export async function GET(_request, { params }) {
-  const session = await auth();
+  const session = await getSession();
   const userId = session.user.id;
   const { id } = await params;
 
